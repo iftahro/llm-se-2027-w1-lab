@@ -132,7 +132,7 @@ def main() -> int:
             import dspy
 
             os.environ.setdefault(PROVIDERS[provider], env[PROVIDERS[provider]])
-            lm = dspy.LM(model, max_tokens=16)
+            lm = dspy.LM(model, max_tokens=64)
             reply = lm("Reply with the single word: ready")
             text = reply[0] if isinstance(reply, list) else str(reply)
             check("live model call", PASS, text.strip()[:40])
