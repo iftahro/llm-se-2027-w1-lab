@@ -92,3 +92,14 @@ have different remedies.
 - **Evidence**: first pyright run; `src/triage/cli.py` `load_file`, `tests/triage/test_extract.py` `last_prompt`.
 - **What I did about it**: Typed the JSON value as `Any`; read `history` through `getattr`.
 - **Did it work?**: Yes; 0 errors.
+
+---
+
+### E7
+
+- **Date**: 2026-10-29
+- **What happened**: The agent proposed the record fields and silently dropped `duplicate_candidate`, one of the five fields the dataset's `gold_*` columns point at. It was not raised as a choice or written in `docs/decisions.md` until I asked whether we had chosen all the fields.
+- **Class**: spec
+- **Evidence**: `docs/decisions.md` (first version had no duplicate_candidate line); `data/snapshot/MANIFEST.md` lists it.
+- **What I did about it**: Asked why it was missing; recorded the decision and the reason.
+- **Did it work?**: Yes, but only because I asked. Scope decisions need to be surfaced, not made silently.

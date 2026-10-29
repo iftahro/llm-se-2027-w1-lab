@@ -14,6 +14,7 @@ write down what you actually decided, not what you think is the right answer.
 ---
 
 - Record fields: repo, number, issue_type, component, severity, has_reproduction_steps, confidence, summary.
+- duplicate_candidate is left out: it needs a comparison against other issues, which "one issue in, one record out" cannot do, and it has no gold labels; deferred to a later step.
 - issue_type vocabulary is bug / enhancement / documentation / question, shared across all three repos; hono's "meta" type is dropped.
 - An issue with no clear type gets issue_type = "unknown", not null and not a forced guess.
 - component uses each repo's own list from config/repos.toml (not normalised across repos) or null; textual has no list, so only null is valid there.
