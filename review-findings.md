@@ -101,61 +101,51 @@ Confidence: `certain` | `probable` | `uncertain`
 
 ### Finding 1
 
-- **Location** (file:line):
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters** (what breaks, for whom, when):
-- **What would have caught this** (a test? a type? a review rule? nothing?):
+- **Location** (file:line): `tests/exercise_b/test_batch.py`
+- **Confidence**: probable
+- **What is wrong**: Batch tests only use valid model output and at most 1 issue.
+- **Why it matters** (what breaks, for whom, when): Bad output (`"Critical"`, `"urgent"`) and real batches are never tested.
+- **What would have caught this** (a test? a type? a review rule? nothing?): Tests with bad values and 2+ issues.
 
 ---
 
 ### Finding 2
 
-- **Location**:
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters**:
-- **What would have caught this**:
+- **Location** (file:line): `similarity.py:7`
+- **Confidence**: certain
+- **What is wrong**: `levenshtein_fast` is not in `pyproject.toml`; `type: ignore` hides it.
+- **Why it matters** (what breaks, for whom, when): Any batch of 2+ issues crashes, yet CI is green.
+- **What would have caught this** (a test? a type? a review rule? nothing?): Running the batch once; a test with 2+ issues.
 
 ---
 
 ### Finding 3
 
-- **Location**:
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters**:
-- **What would have caught this**:
+- **Location** (file:line): `similarity.py:19-20` (`blame_context`)
+- **Confidence**: certain
+- **What is wrong**: Issue title goes into a shell command with `shell=True`.
+- **Why it matters** (what breaks, for whom, when): A malicious title runs commands on the machine.
+- **What would have caught this** (a test? a type? a review rule? nothing?): Review rule: no untrusted text in a shell; a security linter.
 
 ---
 
 ### Finding 4
 
-- **Location**:
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters**:
-- **What would have caught this**:
+- **Location** (file:line): `router.py` (`route_raw`)
+- **Confidence**: certain
+- **What is wrong**: `route_raw` ignores `confidence` and `has_reproduction_steps`, unlike `route`.
+- **Why it matters** (what breaks, for whom, when): Batch issues are routed by weaker rules than single issues.
+- **What would have caught this** (a test? a type? a review rule? nothing?): A test comparing `route` and `route_raw` on the same input.
 
 ---
 
 ### Finding 5
 
-- **Location**:
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters**:
-- **What would have caught this**:
-
----
-
-### Finding 6
-
-- **Location**:
-- **Confidence**:
-- **What is wrong**:
-- **Why it matters**:
-- **What would have caught this**:
+- **Location** (file:line): `policy.py:54`, `router.py` (`route_raw`)
+- **Confidence**: certain
+- **What is wrong**: `ticket_priority` is a second name for severity.
+- **Why it matters** (what breaks, for whom, when): Breaks the package's "one concept, one name" rule.
+- **What would have caught this** (a test? a type? a review rule? nothing?): Reading `schema.py` during review.
 
 ---
 
