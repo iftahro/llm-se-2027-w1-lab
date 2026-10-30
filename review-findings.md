@@ -155,17 +155,22 @@ After `git apply`, `uv run pytest`, `uv run pyright` and the batch run.
 
 ### What the tooling found that I did not
 
-- **Which tool** (pytest / pyright / running it):
-- **What it showed**:
-- **Would I have found this by reading?** (be honest):
+- **Which tool** (pytest / pyright / running it): running the batch
+- **What it showed**: it printed "triaged 240 issues" and then crashed on `levenshtein_fast`, so all the triage work is lost and no routing report is produced (with the live model, 240 paid calls wasted).
+- **Would I have found this by reading?** (be honest): partly. I found the missing package (finding 2), but not that the crash comes after all the model calls.
+
+Also: pytest passed all 40 tests, and pyright reported 1 error at `similarity.py:11` ("Argument type is unknown"), an indirect hint of finding 2.
 
 ### What I found by reading that the tooling did not
 
-- 
+- Finding 1: tests only use valid output and at most 1 issue (the tests themselves are the gap).
+- Finding 3: shell injection in `blame_context` (nothing calls it, so nothing runs it).
+- Finding 4: `route_raw` ignores `confidence` and `has_reproduction_steps`.
+- Finding 5: `ticket_priority` as a second name for severity.
 
 ### Anything the tooling reported that turned out not to be a problem
 
-- 
+- Pyright's 31 warnings: all in the DSPy files, where they are relaxed to warnings on purpose.
 
 ---
 
